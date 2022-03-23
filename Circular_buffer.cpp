@@ -75,7 +75,13 @@ public:
     void resize(size_t size)
     {
         CCircularBuffer new_buffer{size_ + size};
-        memccpy(new_buffer.buffer_, buffer_, sizeof(T) * size_);
+        int i = 0;
+        for(Iterator it = this->begin(); it != this->end(); ++it)
+        {
+            new_buffer.buffer_[i] = *it;
+            ++i;
+        }
+        new_buffer.end_ = i;
         *this = new_buffer;
     }
     bool empty() const
@@ -85,11 +91,11 @@ public:
     class Iterator;
     Iterator begin()
     {
-        return buffer_ + begin_;
+        return Iterator(this, buffer_ + begin_);
     }
     Iterator end()
     {
-        return buffer_ + end_;
+        return Iterator(this, buffer_ + end_);
     }
 
 private:
@@ -103,12 +109,64 @@ template<typename T>
 class CCircularBuffer<T>::Iterator
 {
     public:
-
+    Iterator(CCircularBuffer* curr, T* current)
+    :circular_buffer_(curr), current_(current) {}
+    Iterator(const Iterator &other)
+    :circular_buffer_(other.circular_buffer_), current_(other.current_) {}
+    Iterator &operator=(const Iterator& other)
+    {
+        if(*this!=other)
+        {
+            this->circular_buffer_ = other.circular_buffer_;
+            this->current_  = other.current_;
+        }
+        return *this;
+    }
+    Iterator &operator++(int)
+    {
+        Iterator tmp(*this);
+        operator++();
+        return *this;
+    }
+    Iterator &operator++()
+    {
+        ++current_;
+        if(current_ == (circular_buffer_->buffer_ + circular_buffer_->size_ + 1))
+        {
+            current_ = circular_buffer_->buffer_;
+        }
+        return *this;
+    }
+    bool operator==(const Iterator& right)
+    {
+        return current_ == right.current_;
+    }
+    bool operator!=(const Iterator& right)
+    {
+        return !(*this == right);
+    }
+    T& operator*()
+    {
+        return *current_;
+    }
     private:
-    T* current;
+    CCircularBuffer* circular_buffer_;
+    T* current_;
 };
 
 int main()
 {
+    CCircularBuffer<int> buf(5);
+    for (int i = 0; i<10; ++i)
+    {
+        buf.push_back(i);
+    }
+    for (CCircularBuffer<int>::Iterator it = buf.begin(); it != buf.end(); ++it)
+    {
+        std::cout << *it << " ";
+    }
+    CCircularBuffer<int>::Iterator it = buf.begin();
+    *it = 10;
+    std::cout << buf[0]; 
     return 0;
 }
