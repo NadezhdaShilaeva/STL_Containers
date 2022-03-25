@@ -259,11 +259,11 @@ public:
     }
     bool operator>=(const iterator &right)
     {
-        return *this > right || *this == right;
+        return !(*this < right);
     }
     bool operator<=(const iterator &right)
     {
-        return *this < right || *this == right;
+        return !(*this > right);
     }
     T &operator*()
     {

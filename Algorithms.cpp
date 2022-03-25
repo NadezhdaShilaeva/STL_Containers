@@ -1,12 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "algorithms.hpp"
-
-template <typename T>
-T max(const T &a, const T &b)
-{
-    return a > b ? a : b;
-}
+#include "CRational.hpp"
 
 int main()
 {
@@ -32,22 +27,29 @@ int main()
     std::cout << "is_palindrome % 3 == 0: " << is_palindrome(vec.begin(), vec.end(), [](int x) -> bool { return x % 3 == 0; }) << std::endl;
     std::cout << "is_palindrome % 2 == 0: " << is_palindrome(vec.begin(), vec.end(), [](int x) -> bool { return x % 2 == 0; }) << std::endl;
 
-    /*all_of - возвращает true, если все элементы диапазона удовлетворяют
-некоторому предикату. Иначе false
-2. any_of - возвращает true, если хотя бы один из элементов диапазона
-удовлетворяет некоторому предикату. Иначе false
-3. none_of - возвращает true, если все элементы диапазона не удовлетворяют
-некоторому предикату. Иначе false
-4. one_of - возвращает true, если ровно один элемент диапазона удовлетворяет
-некоторому предикату. Иначе false
-5. is_sorted - возвращает true, если все элементы диапазона находятся в
-отсортированном порядке относительно некоторого критерия
-6. is_partitioned - возвращает true, если в диапазоне есть элемент, делящий все
-элементы на удовлетворяющие и не удовлетворяющие некоторому предикату.
-Иначе false.
-7. find_not - находит первый элемент, не равный заданному
-8. find_backward - находит первый элемент, равный заданному, с конца
-9. is_palindrome - возвращает true, если заданная последовательность является
-палиндромом относительно некоторого условия. Иначе false.*/
+    std::vector<CRational> vec_rat;
+    for (int i = 0; i < 10; ++i)
+    {
+        vec_rat.push_back(CRational(i, 2));
+        std::cout << vec_rat[i] << " ";
+    }
+    std::cout << std::endl;
+    CRational val4(4, 1);
+    CRational val10(10, 1);
+    std::cout << "all_of > 4: " << all_of(vec_rat.begin(), vec_rat.end(), [](CRational x) -> bool { return x > 4; }) << std::endl;
+    std::cout << "all_of < 10: " << all_of(vec_rat.begin(), vec_rat.end(), [](CRational x) -> bool { return x < 10; }) << std::endl;
+    std::cout << "any_of == 4: " << any_of(vec_rat.begin(), vec_rat.end(), [](CRational x) -> bool { return x == 4; }) << std::endl;
+    std::cout << "any_of > 10: " << any_of(vec_rat.begin(), vec_rat.end(), [](CRational x) -> bool { return x > 10; }) << std::endl;
+    std::cout << "none_of == 10: " << none_of(vec_rat.begin(), vec_rat.end(), [](CRational x) -> bool { return x == 10; }) << std::endl;
+    std::cout << "none_of > 4: " << none_of(vec_rat.begin(), vec_rat.end(), [](CRational x) -> bool { return x > 4; }) << std::endl;
+    std::cout << "is_sorted ascending: " << is_sorted(vec_rat.begin(), vec_rat.end(), [](CRational x, CRational y) -> bool { return x < y; }) << std::endl;
+    std::cout << "is_sorted descending: " << is_sorted(vec_rat.begin(), vec_rat.end(), [](CRational x, CRational y) -> bool { return x > y; }) << std::endl;
+    std::cout << "is_partitioned < 4: " << is_partitioned(vec_rat.begin(), vec_rat.end(), [](CRational x) -> bool { return x < 4; }) << std::endl;
+    std::cout << "is_partitioned 1 < x < 2: " << is_partitioned(vec_rat.begin(), vec_rat.end(), [](CRational x) -> bool { return x > 1 && x < 2; }) << std::endl;
+    std::cout << "find_not 0: " << *find_not(vec_rat.begin(), vec_rat.end(), 0) << std::endl;
+    std::cout << "find_backward 4: " << *find_backward(vec_rat.begin(), vec_rat.end(), 4) << std::endl;
+    std::cout << "is_palindrome == 0: " << is_palindrome(vec_rat.begin(), vec_rat.end(), [](CRational x) -> bool { return x == 0; }) << std::endl;
+    std::cout << "is_palindrome > -1: " << is_palindrome(vec_rat.begin(), vec_rat.end(), [](CRational x) -> bool { return x > -1; }) << std::endl;
+
     return 0;
 }
