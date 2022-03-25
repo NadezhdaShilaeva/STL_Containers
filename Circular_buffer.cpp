@@ -1,6 +1,6 @@
 #include <iostream>
 #include <algorithm>
-#include "circular_buffer.h"
+#include "circular_buffer.hpp"
 
 int main()
 {

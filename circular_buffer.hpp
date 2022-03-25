@@ -257,6 +257,14 @@ public:
     {
         return *this != right && !(*this < right);
     }
+    bool operator>=(const iterator &right)
+    {
+        return *this > right || *this == right;
+    }
+    bool operator<=(const iterator &right)
+    {
+        return *this < right || *this == right;
+    }
     T &operator*()
     {
         return *current_;
