@@ -16,7 +16,7 @@ int gcd(int u, int v)
 class CRational
 {
 public:
-    CRational(int numerator = 0, unsigned denominator = 1)
+    explicit CRational(int numerator = 0, unsigned denominator = 1)
         : numerator_(numerator), denominator_(denominator)
     {
         unsigned gcd_ = gcd(numerator_, denominator_);

@@ -203,7 +203,8 @@ public:
         }
         else
         {
-            return circular_buffer_->buffer_ + circular_buffer_->size_ + 1 - right.current_ + (current_ - circular_buffer_->buffer_);
+            return circular_buffer_->buffer_ + circular_buffer_->size_ + 1 - 
+                   right.current_ + (current_ - circular_buffer_->buffer_);
         }
     }
     iterator &operator+=(int right)
@@ -232,7 +233,9 @@ public:
         }
         if (current_ < right.current_)
         {
-            if (circular_buffer_->begin_ > circular_buffer_->end_ && right.current_ >= circular_buffer_->buffer_ + circular_buffer_->begin_ && current_ <= circular_buffer_->buffer_ + circular_buffer_->end_)
+            if (circular_buffer_->begin_ > circular_buffer_->end_ && 
+                right.current_ >= circular_buffer_->buffer_ + circular_buffer_->begin_ && 
+                current_ <= circular_buffer_->buffer_ + circular_buffer_->end_)
             {
                 return false;
             }
@@ -243,7 +246,9 @@ public:
         }
         else
         {
-            if (circular_buffer_->begin_ > circular_buffer_->end_ && current_ >= circular_buffer_->buffer_ + circular_buffer_->begin_ && right.current_ <= circular_buffer_->buffer_ + circular_buffer_->end_)
+            if (circular_buffer_->begin_ > circular_buffer_->end_ && 
+                current_ >= circular_buffer_->buffer_ + circular_buffer_->begin_ && 
+                right.current_ <= circular_buffer_->buffer_ + circular_buffer_->end_)
             {
                 return true;
             }
