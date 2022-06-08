@@ -99,6 +99,7 @@ public:
     {
         return begin_ == end_;
     }
+    
     class iterator;
     iterator begin()
     {

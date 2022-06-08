@@ -19,7 +19,7 @@ int main()
     std::cout << buf[0] << std::endl;
     std::cout << *std::max_element(buf.begin(), buf.end()) << std::endl;
     buf.resize(20);
-    for (int i = 23; i<49; ++i)
+    for (int i = 23; i < 49; ++i)
     {
         buf.push_front(i);
     }
